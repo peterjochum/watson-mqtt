@@ -18,8 +18,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Copy the example configuration `config-sample.py` to `config.py`
-1. Create a new device in imcloud.com and enter the credentials
+1. Copy the example configuration `config-sample.yaml` to `config.yaml`
+1. Create a new device in imcloud.com and enter the credentials in the configuration
+   file.
 1. IMPORTANT: Open the devices **status** section in the dashboard before running.
    The messages will not be visible otherwise.
 1. Run the application
