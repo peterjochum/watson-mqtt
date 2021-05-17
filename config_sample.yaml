@@ -1,0 +1,17 @@
+# Device section - fill in the data from your Watson IOT device
+# all fields are required
+device:
+  id:
+  organization:
+  type:
+  auth_type: use-token-auth # the only supported auth type
+  token:
+
+# This will result in the topic iot-2/evt/status/fmt/json
+topic:
+  format: json
+  name: status
+
+# Connection properties
+connection:
+  ssl: yes # automatically sets port to 8883 or 1883 respectively
