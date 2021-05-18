@@ -1,10 +1,10 @@
 # Device section - fill in the data from your Watson IOT device
-# all fields are required
+# all fields are required (publish)
 device:
   id:
   organization:
   type:
-  auth_type: use-token-auth # the only supported auth type
+  username: use-token-auth # has to be use token auth for devices
   token:
 
 # This will result in the topic iot-2/evt/status/fmt/json
@@ -15,3 +15,9 @@ topic:
 # Connection properties
 connection:
   ssl: yes # automatically sets port to 8883 or 1883 respectively
+
+# Consuming API settings (subscribe)
+api:
+  appId:  # Id of the app without a-organization-part (a-myorg-4rtfgtz -> 4rtfgtz)
+  token:
+  organization:
