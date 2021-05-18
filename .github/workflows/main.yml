@@ -19,8 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 flake8-bugbear flake8-mutable \
-          flake8-pie flake8-return flake8-simplify flake8-use-fstringblack
+          if [ -f requirements_dev.txt ]; then pip install -r requirements_dev.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Check formatting
         run: |
