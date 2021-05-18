@@ -57,7 +57,7 @@ publishing temperature 28° ... done
 Subscribing to iot-2/type/sensor/id/pi0-temperature/evt/status/fmt/json
 <topic_string> 0 b'{"temperature": 25, "unit": "celsius"}'
 <topic_string> 0 b'{"temperature": 26, "unit": "celsius"}'
-iot-2/type<topic_string> 0 b'{"temperature": 27, "unit": "celsius"}'
+<topic_string> 0 b'{"temperature": 27, "unit": "celsius"}'
 <topic_string> 0 b'{"temperature": 28, "unit": "celsius"}'
 ```
 
