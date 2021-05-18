@@ -46,6 +46,16 @@ class WatsonClient:
         if use_ssl:
             self.client.tls_set()
 
+    @classmethod
+    def from_config(cls, cfg: dict):
+        return WatsonClient(
+            cfg["device"]["id"],
+            cfg["device"]["organization"],
+            cfg["device"]["type"],
+            cfg["device"]["auth_type"],
+            cfg["device"]["token"],
+        )
+
     @property
     def auth_type(self):
         return self.__auth_type
