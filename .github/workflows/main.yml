@@ -26,6 +26,7 @@ jobs:
         run: |
           black --check .
       - name: Check for issues
+        run: |
           flake8 . --count --max-complexity=10 --max-line-length=88 --statistics
       - name: Run unit tests
         run: |
