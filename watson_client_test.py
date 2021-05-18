@@ -1,9 +1,9 @@
-from unittest import TestCase
+import unittest
 
 from watson_client import WatsonClient
 
 
-class WatsonClientTest(TestCase):
+class TestWatsonClient(unittest.TestCase):
     test_device = "foodev"
     test_organization = "testorg"
     test_device_type = "testtype"
@@ -39,3 +39,7 @@ class WatsonClientTest(TestCase):
             self.fail("No AttributeError was triggered by unsupported auth")
         except AttributeError:
             pass
+
+
+if __name__ == "__main__":
+    unittest.main()
