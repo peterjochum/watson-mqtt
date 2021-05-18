@@ -3,7 +3,41 @@ import json
 import paho.mqtt.client as mqtt
 
 
-class WatsonClient:
+class ConnectURLMixin:
+    def connect(self, port=8883):
+        """
+        Connects the client using the pre set parameters.
+        :param port: Override the default port 8883
+        :return: 0 if the connection was successful
+        """
+        return self.client.connect(self.get_connect_url(), port)
+
+    def get_connect_url(self) -> str:
+        return f"{self.organization}.messaging.internetofthings.ibmcloud.com"
+
+
+class WatsonMQTTApi(ConnectURLMixin):
+    appId: str
+    organization: str
+    token: str
+    client: mqtt.Client
+
+    def __init__(self, appId, organization, token):
+        self.appId = appId
+        self.organization = organization
+        self.token = token
+        self.client = mqtt.Client(self.get_client_id())
+        self.client.username_pw_set(self.get_user_name(), token)
+        self.client.tls_set()
+
+    def get_user_name(self):
+        return f"a-{self.organization}-{self.appId}"
+
+    def get_client_id(self):
+        return f"a:{self.organization}:{self.appId}"
+
+
+class WatsonMQTTDevice(ConnectURLMixin):
     """
     Creates a paho.mqtt.client from IBM Watson IOT device properties.
     """
@@ -41,18 +75,18 @@ class WatsonClient:
         self.device_type = device_type
         self.token = token
         self.auth_type = auth_type
-        self.client = mqtt.Client(self.get_device_str())
-        self.client.username_pw_set("use-token-auth", self.token)
+        self.client = mqtt.Client(self.get_client_id())
+        self.client.username_pw_set(self.auth_type, self.token)
         if use_ssl:
             self.client.tls_set()
 
     @classmethod
     def from_config(cls, cfg: dict):
-        return WatsonClient(
+        return WatsonMQTTDevice(
             cfg["device"]["id"],
             cfg["device"]["organization"],
             cfg["device"]["type"],
-            cfg["device"]["auth_type"],
+            cfg["device"]["username"],
             cfg["device"]["token"],
         )
 
@@ -70,18 +104,7 @@ class WatsonClient:
             )
         self.__auth_type = auth_type
 
-    def connect(self, port=8883):
-        """
-        Connects the client using the pre set parameters.
-        :param port: Override the default port 8883
-        :return: 0 if the connection was successful
-        """
-        return self.client.connect(self.get_connect_url(), port)
-
-    def get_connect_url(self) -> str:
-        return f"{self.organization}.messaging.internetofthings.ibmcloud.com"
-
-    def get_device_str(self):
+    def get_client_id(self):
         """
         Formats the device string as expected by watson IOT
         :return: A string in the form d:organization:device_type:device_id

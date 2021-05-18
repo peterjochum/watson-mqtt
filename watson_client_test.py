@@ -1,6 +1,6 @@
 import unittest
 
-from watson_client import WatsonClient
+from watson_client import WatsonMQTTDevice
 
 
 class TestWatsonClient(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestWatsonClient(unittest.TestCase):
     test_token = "12345"
 
     def setUp(self):
-        self.c = WatsonClient(
+        self.c = WatsonMQTTDevice(
             self.test_device,
             self.test_organization,
             self.test_device_type,
@@ -19,8 +19,8 @@ class TestWatsonClient(unittest.TestCase):
             self.test_token,
         )
 
-    def test_get_device_str(self):
-        device_str = self.c.get_device_str()
+    def test_get_client_id(self):
+        device_str = self.c.get_client_id()
         self.assertEqual("d:testorg:testtype:foodev", device_str)
 
     def test_get_connect_url(self):
