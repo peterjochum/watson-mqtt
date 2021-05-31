@@ -41,7 +41,7 @@ pip install -r requirements_dev.txt
 python main.py subscribe
 
 # Publish the messages
-python main.py publish
+python main.py publish # local
 ```
 
 ```shell
@@ -65,8 +65,42 @@ This should result into messages being published on the broker:
 
 ![Payload published to the status topic](img/sending_data.png)
 
+## Docker support
+
+To run the application as docker image, ensure you have the following setup
+
+1. Working docker installation - `docker run hello-world` should work
+1. Watson account and credentials - see the Usage section above
+
+### Build the application
+
+```shell
+docker build . -t watsonmqtt:local
+```
+
+### Run the subscriber
+
+```shell
+docker run -v $(pwd)/config.yaml:/app/config.yaml --rm watsonmqtt:local subscribe
+```
+
+### Run the publisher
+
+```shell
+docker run -v $(pwd)/config.yaml:/app/config.yaml --rm watsonmqtt:local publish
+```
+
+### Running using docker-compose
+
+If the configuration is in place invoke docker-compose as usual:
+
+```shell
+docker-compose up
+```
+
 ## References
 
 - [Watson IOT Platform Documentation - Communicating with devices (MQTT)](https://www.ibm.com/docs/en/watson-iot-platform?topic=devices-communicating-mqtt)
 - [Watson IOT Platform Documentation - Communicating with applications (MQTT)](https://www.ibm.com/docs/en/watson-iot-platform?topic=applications-communicating-mqtt)
 - [Paho MQTT to Watson IOT (Stackoverflow)](https://stackoverflow.com/questions/46664862/python-paho-mqtt-og-ibm-watson-iot)
+- [Docker Compose documentation](https://docs.docker.com/compose/)

@@ -12,6 +12,7 @@ repos:
     rev: v0.27.1
     hooks:
       - id: markdownlint
+        entry: mdl
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
