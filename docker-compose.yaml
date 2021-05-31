@@ -1,0 +1,20 @@
+version: "3.7"
+
+# List of services
+services:
+  # Message publisher
+  publisher:
+    build: . # Build local image
+    volumes:
+      - ./config.yaml:/app/config.yaml # Map the local config.yaml into the container
+    command: publish # Pass publish as command line parameter
+    depends_on:
+      - subscriber1 # Run this after the first subscriber - subscriber 2 will miss 1 message
+
+  # First subscriber
+  subscriber1:
+    build: . # Subscriber uses the same image
+    volumes:
+      - ./config.yaml:/app/config.yaml  # Map config file
+    command: subscribe  # Pass the subscribe parameter
+    stop_signal: SIGKILL
